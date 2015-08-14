@@ -1,0 +1,20 @@
+---
+title: "Vector Growth"
+date: "Generated: `r Sys.Date()`"
+runtime: shiny
+output:
+    html_document:
+        toc: true
+        toc_depth: 3
+        theme: spacelab
+        highlight: zenburn
+        number_sections: false
+---
+
+```{r global_opts, include=FALSE}
+
+knitr::opts_chunk$set(fig.path="Figs", echo=FALSE, warning=FALSE,
+                      message=FALSE, dev='svg')
+
+```
+
