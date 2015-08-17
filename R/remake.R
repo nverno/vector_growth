@@ -3,20 +3,20 @@
 ## Description: Remake datasets for analysis
 ## Author: Noah Peart
 ## Created: Thu Aug 13 19:58:42 2015 (-0400)
-## Last-Updated: Thu Aug 13 20:15:05 2015 (-0400)
+## Last-Updated: Fri Aug 14 13:01:54 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
 ## Find data
 locs <- findData(dataloc, datafiles)
-if (length(locs$missed)) stop(paste("Missing", locs$missed))
+if (length(locs$missed)) stop(paste("\nMissing", locs$missed))
 
 ## Data with estimated heights/boles
 tryCatch({
     pp <- read.csv(paste0(dataloc, "pp.csv"))
     tp <- read.csv(paste0(dataloc, "transect.csv"))
 }, error=function(e) 
-    stop("\n\n*** No data found -- run the update to get the data ***\n\n"))
+    stop("\n\n*** Failed to read data ***\n\n"))
 
 ################################################################################
 ##
@@ -100,7 +100,7 @@ dat$YEAR <- factor(dat$YEAR, levels=c(86, 87, 98, 10))
 dat$ELEVCL <- factor(dat$ELEVCL, levels=levels(dat$ELEVCL)[c(3,4,2,1)])
 dat$PPLOT <- as.factor(dat$PPLOT)
 pp <- dat[!is.na(dat$DBH) | !is.na(dat$HT), ]
-saveRDS(pp, "temp/pp.rds")
+saveRDS(pp, "../temp/pp.rds")
 
 ################################################################################
 ##
@@ -197,4 +197,4 @@ tp$X <- -coords[,1]
 tp$Y <- coords[,2]
 
 ## Save
-saveRDS(tp, "temp/tp.rds")
+saveRDS(tp, "../temp/tp.rds")
