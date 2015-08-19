@@ -3,7 +3,7 @@
 ## Description: Remake datasets for analysis
 ## Author: Noah Peart
 ## Created: Thu Aug 13 19:58:42 2015 (-0400)
-## Last-Updated: Fri Aug 14 13:01:54 2015 (-0400)
+## Last-Updated: Wed Aug 19 17:33:55 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -98,7 +98,7 @@ dat <- reshape(dat, times = yrs, direction = "long",
                timevar = "YEAR")
 dat$YEAR <- factor(dat$YEAR, levels=c(86, 87, 98, 10))
 dat$ELEVCL <- factor(dat$ELEVCL, levels=levels(dat$ELEVCL)[c(3,4,2,1)])
-dat$PPLOT <- as.factor(dat$PPLOT)
+dat$PPLOT <- factor(dat$PPLOT)
 pp <- dat[!is.na(dat$DBH) | !is.na(dat$HT), ]
 saveRDS(pp, "../temp/pp.rds")
 
