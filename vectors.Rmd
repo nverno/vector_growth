@@ -22,13 +22,18 @@ knitr::opts_chunk$set(fig.path="Figs", echo=FALSE, warning=FALSE,
 
 source("R/setup.R", chdir=T)
 
-
 ```
 
 
 ```{r summaries}
 
 
+```
+
+```{r vectors}
+
+source("R/growth_vectors.R", local=T)
+vecUI
 
 
 ```
