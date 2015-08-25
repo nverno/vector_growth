@@ -3,7 +3,7 @@
 ## Description: 
 ## Author: Noah Peart
 ## Created: Wed Aug 19 14:42:19 2015 (-0400)
-## Last-Updated: Mon Aug 24 15:05:41 2015 (-0400)
+## Last-Updated: Tue Aug 25 12:56:48 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -27,7 +27,7 @@ if (interactive()) {
 ##
 ################################################################################
 vgInds <- reactive({
-    with(pp, PPLOT %in% input$vgPlot & !is.na(pp[,input$vgX]) & !is.na(pp[,input$vgY]))
+    with(dat(), PPLOT %in% input$vgPlot & !is.na(dat()[,input$vgX]) & !is.na(dat()[,input$vgY]))
 })
 
 vgArrow <- reactive({
@@ -35,13 +35,13 @@ vgArrow <- reactive({
 })
 
 vgSamp <- reactive({
-    samp <- pp[vgInds(),]
+    samp <- dat()[vgInds(),]
     samp$cols <- if (input$vgShowDied) {
-        with(pp[vgInds(),], {
+        with(dat()[vgInds(),], {
             died <- sapply(split(DIED, id), function(x) any(x==1, na.rm=T))
-            factor(1L+died[match(pp[vgInds(), "id"], names(died))], levels=2:1)
+            factor(1L+died[match(dat()[vgInds(), "id"], names(died))], levels=2:1)
         })
-    } else pp[vgInds(), "YEAR"]
+    } else dat()[vgInds(), "YEAR"]
     samp
 })
 
@@ -72,7 +72,7 @@ vecUI <- renderUI({
     
     sidebarLayout(
         sidebarPanel(
-            selectInput("vgPlot", "Choose Plot:", choices=levels(pp$PPLOT)),
+            selectInput("vgPlot", "Choose Plot:", choices=levels(dat()$PPLOT)),
             selectInput("vgY", "Y", choices=c("HT", "HTOBS", "DBH", "BV", "BA")),
             selectInput("vgX", "X", choices=c("DBH", "BV", "BA", "HT", "HTOBS")),
             checkboxInput("vgSplit", "Split by Species"),

@@ -24,14 +24,22 @@ source("R/setup.R", chdir=T)
 
 ```
 
+```{r subset}
+ 
+hr()
+h3("Subset Data", style="color: #009ACD;")
+source("R/subset.R", local=T)
+chooser
+
+```
 
 ```{r summaries}
-
 
 ```
 
 ```{r vectors}
 
+hr()
 source("R/growth_vectors.R", local=T)
 vecUI
 
