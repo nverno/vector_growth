@@ -3,7 +3,7 @@
 ## Description: 
 ## Author: Noah Peart
 ## Created: Thu Aug 13 19:57:04 2015 (-0400)
-## Last-Updated: Wed Aug 19 16:42:28 2015 (-0400)
+## Last-Updated: Wed Aug 26 15:25:32 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -20,7 +20,9 @@ require(shiny)
 require(plyr)
 require(dplyr)
 require(ggplot2)
-require(grid)  # arrows
+require(grid)      # arrows
+require(shinyjs)   # toggle/show/hid
+require(devtools)  # install_github
 
 ################################################################################
 ##

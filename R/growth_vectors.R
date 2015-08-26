@@ -3,7 +3,7 @@
 ## Description: 
 ## Author: Noah Peart
 ## Created: Wed Aug 19 14:42:19 2015 (-0400)
-## Last-Updated: Wed Aug 26 13:24:09 2015 (-0400)
+## Last-Updated: Wed Aug 26 15:13:00 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -26,6 +26,36 @@ if (interactive()) {
 ##                                  Layout
 ##
 ################################################################################
+## Create layout options
+output$layoutOptions <- renderUI({
+    fluidPage(
+        fluidRow(class="layoutRow1",
+            column(width=2, class="layoutRow1 colEven",
+                   helpText("Species Selectors:", style="font-weight:bold; color: grey;"), 
+                   actionButton("vgAllSpec", "All", style="width:100px;"),
+                   hr(style="margin-top: 0.2em; margin-bottom: 0.2em;"),
+                   actionButton("vgNoneSpec", "None", style="width:100px"),
+                   hr(style="margin-top: 0.2em; margin-bottom: 0.2em;"),
+                   actionButton("vgMainThree", "Main Three", style="width:100px")),
+            column(width=2, class="layoutRow1 colOdd",
+                   checkboxGroupInput("vgSpec", "Species:", choices=levels(pp$SPEC), selected="ABBA")),
+            column(width=2, class="layoutRow1 colEven",
+                   checkboxGroupInput("vgAspect", "Aspect:",
+                                      choices=levels(pp$ASPCL), selected=levels(pp$ASPCL))),
+            column(width=2, class="layoutRow1 colOdd",
+                   checkboxGroupInput("vgElev", "Elevation:",
+                                      choices=levels(pp$ELEVCL), selected=levels(pp$ELEVCL)))
+        ),
+        hr(),
+        fluidRow(actionButton("vgSubset", "Make Subset") ),
+        tags$head(tags$style("
+.layoutRow1{height:400px;}
+.colEven{background-color: rgba(0,20,0,0.1);}
+.colOdd{background-color: rgba(0,0,0,0);}"
+                             ))
+    )
+})
+
 
 
 ################################################################################
@@ -71,9 +101,9 @@ vecGrowth <- renderPlot({
         else p1 <- p1 + facet_grid(~ SPEC)
 
     if (input$vgSmooth) {
-        p1 <- p1 + geom_smooth(method=input$vgSmoothMethod, alpha=0.05)
+        p1 <- p1 + geom_smooth(method=input$vgSmoothMethod, alpha=0.05, na.rm=T)
     }
-    p1
+    tryCatch(print(p1), error=function(e) "Something broke.")
 })
 
 vecUI <- renderUI({

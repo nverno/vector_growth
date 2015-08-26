@@ -28,9 +28,20 @@ source("R/setup.R", chdir=T)
 ```{r subset}
  
 hr()
-h3("Subset Data", style="color: #009ACD;")
+tags$input(type="button", value="Subset Data", 
+           style="color: #009ACD; font-size: 150%; background-color: #fff", 
+             class="btn action-button", id="showSubset")
+
 source("R/subset.R", local=T)
 uiOutput('chooser')
+verbatimTextOutput('vgSubText')
+
+## if (require(shinyjs)) { 
+##     useShinyjs(rmd=TRUE)
+##     observeEvent(input$showSubset, {
+##         toggle('chooser')
+##     })
+## }
 
 ```
 
