@@ -25,8 +25,9 @@ source("R/setup.R", chdir=T)
 
 ```
 
+# Subset
+
 ```{r subset}
- 
 hr()
 tags$input(type="button", value="Subset Data", 
            style="color: #009ACD; font-size: 150%; background-color: #fff", 
@@ -45,18 +46,32 @@ verbatimTextOutput('vgSubText')
 
 ```
 
+# User Interface
+```{r layout}
+
+hr()
+tags$input(type="button", value="Create Interface", 
+           style="color: #009ACD; font-size: 150%; background-color: #fff", 
+             class="btn action-button", id="showLayout")
+
+uiOutput('vgLayout')
+
+```
+
 ```{r summaries}
 
 
 ```
 
+# Vectors
+
 ```{r vectors} 
 
 hr()
 source("R/growth_vectors.R", local=T)
-vecUI
+
+uiOutput('vgInterface')
 
 textOutput('vgInfo') 
 
 ```
- 
