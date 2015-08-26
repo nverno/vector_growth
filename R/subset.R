@@ -3,7 +3,7 @@
 ## Description: Interface to subset the data
 ## Author: Noah Peart
 ## Created: Mon Aug 24 18:28:13 2015 (-0400)
-## Last-Updated: Wed Aug 26 13:23:23 2015 (-0400)
+## Last-Updated: Wed Aug 26 14:37:22 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -28,22 +28,31 @@ if (interactive()) {
 ################################################################################
 ## Selections
 output$chooser <- renderUI({
-    fluidRow(
-        column(width=2,
-               helpText("Species Selectors:"), 
-               actionButton("vgAllSpec", "Select All"),
-               hr(),
-               actionButton("vgNoneSpec", "Select None"),
-               hr(),
-               actionButton("vgMainThree", "Main Three")),
-        column(width=2,
-               checkboxGroupInput("vgSpec", "Species:", choices=levels(pp$SPEC), selected="ABBA")),
-        column(width=2,
-               checkboxGroupInput("vgAspect", "Aspect:",
-                                  choices=levels(pp$ASPCL), selected=levels(pp$ASPCL))),
-        column(width=2, 
-               checkboxGroupInput("vgElev", "Elevation:",
-                                  choices=levels(pp$ELEVCL), selected=levels(pp$ELEVCL)))
+    fluidPage(
+        fluidRow(class="chooserRow1",
+            column(width=2, class="chooserRow1 colEven",
+                   helpText("Species Selectors:", style="font-weight:bold; color: grey;"), 
+                   actionButton("vgAllSpec", "All", style="width:100px;"),
+                   hr(style="margin-top: 0.2em; margin-bottom: 0.2em;"),
+                   actionButton("vgNoneSpec", "None", style="width:100px"),
+                   hr(style="margin-top: 0.2em; margin-bottom: 0.2em;"),
+                   actionButton("vgMainThree", "Main Three", style="width:100px")),
+            column(width=2, class="chooserRow1 colOdd",
+                   checkboxGroupInput("vgSpec", "Species:", choices=levels(pp$SPEC), selected="ABBA")),
+            column(width=2, class="chooserRow1 colEven",
+                   checkboxGroupInput("vgAspect", "Aspect:",
+                                      choices=levels(pp$ASPCL), selected=levels(pp$ASPCL))),
+            column(width=2, class="chooserRow1 colOdd",
+                   checkboxGroupInput("vgElev", "Elevation:",
+                                      choices=levels(pp$ELEVCL), selected=levels(pp$ELEVCL)))
+        ),
+        hr(),
+        fluidRow(width=4, offset=4, actionButton("vgSubset", "Make Subset") ),
+        tags$head(tags$style("
+.chooserRow1{height:400px;}
+.colEven{background-color: rgba(0,20,0,0.1);}
+.colOdd{background-color: rgba(0,0,0,0);}"
+                             ))
     )
 })
 
