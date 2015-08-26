@@ -3,12 +3,13 @@ title: "Vector Growth"
 date: "Generated: `r Sys.Date()`"
 runtime: shiny
 output:
-    html_document:
-        toc: true
-        toc_depth: 3
-        theme: spacelab
-        highlight: zenburn
-        number_sections: false
+  html_document:
+    css: styles.css
+    toc: true
+    toc_depth: 3
+    theme: spacelab
+    highlight: zenburn
+    number_sections: false		
 ---
 
 ```{r global_opts, include=FALSE}
@@ -29,7 +30,7 @@ source("R/setup.R", chdir=T)
 hr()
 h3("Subset Data", style="color: #009ACD;")
 source("R/subset.R", local=T)
-chooser
+uiOutput('chooser')
 
 ```
 
@@ -38,11 +39,13 @@ chooser
 
 ```
 
-```{r vectors}
+```{r vectors} 
 
 hr()
 source("R/growth_vectors.R", local=T)
 vecUI
 
+textOutput('vgInfo') 
 
 ```
+ 

@@ -3,7 +3,7 @@
 ## Description: Interface to subset the data
 ## Author: Noah Peart
 ## Created: Mon Aug 24 18:28:13 2015 (-0400)
-## Last-Updated: Tue Aug 25 13:05:42 2015 (-0400)
+## Last-Updated: Wed Aug 26 13:23:23 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -26,14 +26,48 @@ if (interactive()) {
 ##                                   Main
 ##
 ################################################################################
-## Subsets:
-## SPEC
-chooser <- renderUI({
-    inputPanel(
-        checkboxGroupInput("vgSpec", "Species:", choices=levels(pp$SPEC), selected="ABBA")
+## Selections
+output$chooser <- renderUI({
+    fluidRow(
+        column(width=2,
+               helpText("Species Selectors:"), 
+               actionButton("vgAllSpec", "Select All"),
+               hr(),
+               actionButton("vgNoneSpec", "Select None"),
+               hr(),
+               actionButton("vgMainThree", "Main Three")),
+        column(width=2,
+               checkboxGroupInput("vgSpec", "Species:", choices=levels(pp$SPEC), selected="ABBA")),
+        column(width=2,
+               checkboxGroupInput("vgAspect", "Aspect:",
+                                  choices=levels(pp$ASPCL), selected=levels(pp$ASPCL))),
+        column(width=2, 
+               checkboxGroupInput("vgElev", "Elevation:",
+                                  choices=levels(pp$ELEVCL), selected=levels(pp$ELEVCL)))
     )
 })
 
+## Species Observers
+observeEvent(input$vgAllSpec,
+             updateCheckboxGroupInput(session, "vgSpec", "Species:",
+                                      choices=levels(pp$SPEC),
+                                      selected=levels(pp$SPEC))
+             )
+
+observeEvent(input$vgNoneSpec,
+             updateCheckboxGroupInput(session, "vgSpec", "Species:",
+                                      choices=levels(pp$SPEC),
+                                      selected=NULL)
+             )
+observeEvent(input$vgMainThree,
+             updateCheckboxGroupInput(session, "vgSpec", "Species:",
+                                      choices=levels(pp$SPEC),
+                                      selected=c("ABBA", "PIRU", "BECO"))
+             )
+
+## Create subset
 dat <- reactive({
-    droplevels(with(pp, pp[SPEC %in% input$vgSpec, ]))
+    droplevels(with(pp, pp[SPEC %in% input$vgSpec &
+                             ASPCL %in% input$vgAspect &
+                           ELEVCL %in% input$vgElev, ]))
 })

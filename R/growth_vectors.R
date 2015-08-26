@@ -3,7 +3,7 @@
 ## Description: 
 ## Author: Noah Peart
 ## Created: Wed Aug 19 14:42:19 2015 (-0400)
-## Last-Updated: Tue Aug 25 12:56:48 2015 (-0400)
+## Last-Updated: Wed Aug 26 13:24:09 2015 (-0400)
 ##           By: Noah Peart
 ######################################################################
 
@@ -20,6 +20,13 @@ if (interactive()) {
     })  # 414
     vgInds <- function() inds
 }
+
+################################################################################
+##
+##                                  Layout
+##
+################################################################################
+
 
 ################################################################################
 ##
@@ -56,7 +63,8 @@ vecGrowth <- renderPlot({
         p1 <- p1 + scale_color_discrete("Year")
 
     if (input$vgPoints)
-        p1 <- p1 + geom_point(alpha=0.5)
+        p1 <- p1 + geom_point(alpha=0.5, aes(shape=STAT)) +
+          scale_shape_manual(values=c(16,4))
     
     if (input$vgSplit)
         if (input$vgWrap) p1 <- p1 + facet_wrap(~ SPEC)
@@ -104,3 +112,22 @@ vecUI <- renderUI({
         )
     )
 })
+
+################################################################################
+##
+##                                   Info
+##
+################################################################################
+vgPointInfo <-
+    'Points marked with \'X\' were dead when measured (should all be from 1980s).'
+
+## tags$head(tags$style("#vgInfo{
+## background-color: green;
+## }"))
+
+output$vgInfo <- renderText({
+    if (input$vgPoints) vgPointInfo
+})
+
+
+
