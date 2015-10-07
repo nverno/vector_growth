@@ -68,7 +68,7 @@ uiOutput('vgLayout')
 ```{r vectors} 
 
 hr()
-source("R/growth_vectors.R", local=T)
+source("R/growth_vectors.R", local=TRUE)
 
 uiOutput('vgInterface')
 
